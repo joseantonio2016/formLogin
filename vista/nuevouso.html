@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Ingresar nuevo uso</title>
+	<link rel="stylesheet" href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/estilo.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+<header>
+	
+</header>
+<nav></nav>
+<section>
+	<div class="container">
+			
+			<form>
+		
+			<div align="center" class="form-signin">
+				<h2 class="form-signin-heading">Registrar uso</h2>
+				
+				<div>
+				<input type="text" id="nombreuso" placeholder="Nuevo uso" list="l_usos" maxlength="30" required pattern="[a-zA-Z]+[\w]*">
+				</div>
+					
+					<div><a href="#" id="masdetalle">Agregar detalles</a></div>
+					<div id="divdetalles">
+						<div><input type="text" id="descriuso" placeholder="Descripcion" maxlength="45"></div>
+						<div><input type="date" ></div>
+					<div><input type="text" id="editoruso" placeholder="Editor"></div>
+					<div><input type="text" id="observuso" placeholder="Observacion"></div>
+					<div><a href="#" id="sindetalle">Ocultar detalles</a></div>
+					</div>
+					<div>
+						<input type="reset" class="btn-lg btn-primary " value="Limpiar" id="btnnuevouso">
+						<input type="submit" class="btn-lg btn-primary " value="Guardar" id="btnnuevouso">
+					</div>
+					
+
+				<div>
+					<h4>Lista de insumos</h4>
+					<div>
+						<input type="button" id="lorem" value="Agregar">
+						<input type="button" value="Nuevo">
+					</div>
+					<table id="tablanuevosusos">
+						
+					</table>
+
+					
+				</div>
+					
+					
+				
+				
+				
+				<datalist id="url_list"> </datalist>
+				<datalist id="l_usos"> </datalist>
+				
+			</div>
+		</form>
+		
+		
+			
+				
+			
+		
+	</div>
+</section>
+
+<footer></footer>
+<script>
+	$(document).ready(ini);
+
+function ini(){
+   
+    $("#lorem").click(nuevafila);
+    $("#nombreuso").click(recuperanombUsos);
+    $("#masdetalle").click(masdetalles);
+   nuevafila();
+    $("#divdetalles").css("display","none");
+    $("#sindetalle").click(function(){
+    	$("#divdetalles").css("display","none");
+    	$("#masdetalle").text("Agregar detalles");
+    });
+}
+
+
+function masdetalles(){
+	 var divd = $("#masdetalle").text();
+	if (divd=="Agregar detalles"){
+		$("#divdetalles").css("display","block");
+		$("#masdetalle").text("Ocultar detalles");
+	}
+	else{
+		$("#divdetalles").css("display","none");
+		$("#masdetalle").text("Agregar detalles");
+	}
+}
+
+var arritemsUsados = [];
+var creceinput = 0;
+
+function changeItem(index){
+	var jy = "#k"+index;
+	//arritemsUsados.push($("#k"+index).text());
+	console.log($(jy).val());
+	
+}
+
+  function recuperaExistencias(){
+     $.ajax({
+        url:"recuperarItems.php",
+        success:function(result){
+            
+                $("#url_list").html(result);
+            
+        }
+        
+    });
+  }
+   
+
+    function recuperanombUsos(){
+    $.ajax({
+        url:"recuperarnombreUsos.php",
+        success:function(result){
+            
+                $("#l_usos").html(result);
+            
+        }
+        
+    });
+}
+
+function nuevafila(){
+	var index = creceinput++;
+        var tnu = String.raw`<tr><td>
+        <input type="text" list="url_list" onchange="changeItem(${index})" id="k${index}" onclick="recuperaExistencias()"></td></tr>`;
+
+$("#tablanuevosusos").prepend(tnu);
+    }
+</script>
+</body>
+</html>
+<!-- "
+	<td><div class="btn-group btn-group-toggle" data-toggle="buttons">
+</div></td>
+<label class="btn btn-outline-info active">
+    <input type="radio" name="options" value="2" id="option1" autocomplete="off" checked> Apto
+  </label>
+  <label class="btn btn-outline-warning">
+    <input type="radio" name="options" value="1" id="option2" autocomplete="off"> Poco
+  </label>
+  <label class="btn btn-outline-danger">
+    <input type="radio" name="options" value="0" id="option3" autocomplete="off"> Nada
+  </label>
+   <div>
+						<input type="button" class="btn-lg btn-primary" value="Agregar" id="btnnuevouso">
+						<input type="button" class="btn-lg btn-primary" value="Editar" id="btnnuevouso">
+						<input type="reset" class="btn-lg btn-primary" value="Limpiar" id="btnreseteuso">
+						<input type="submit" class="btn-lg btn-primary" value="Guardar" id="btnnuevouso">
+					</div>	 -->

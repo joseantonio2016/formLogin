@@ -4,16 +4,20 @@ include "conexion.php";
 function crearBd(){
 	$cnn=new conexion();
 	$con = $cnn -> conectar();
-	
+
 	$sql = "CREATE DATABASE frmLogin";
-	
+
 	if (mysqli_query($con,$sql)){
 		echo "consulta correcta";
 	}
 	mysqli_close($con);
 }
 //crearBd();
-
+//180401E
+//fecha justificacion editor descripcion
+//180403154009 arroz con pollo C 1_2|3_1|4_0
+//C=jefe E=subordinado
+//2=uso 1=poco 0=nada
 function crearTablas(){
 	$cnn=new conexion();
 	$con = $cnn -> conectar();
